@@ -3,8 +3,13 @@ import fs from "fs";
 import multer from "multer";
 
 export const PORT = Number(process.env.PORT) || 3000;
-// Bind to 0.0.0.0 for container accessibility
-export const HOST = process.env.HOST || "0.0.0.0";
+// Default to 127.0.0.1 (localhost only) — this is what the browser should be
+// pointed at, and it keeps the app off the local network unless the user
+// deliberately opts in. Containers/preview sandboxes that need external
+// reachability can set HOST=0.0.0.0 in .env; note 0.0.0.0 is a *bind*
+// address, not a browsable one — server.ts substitutes 127.0.0.1 in the URL
+// it prints/opens whenever the bind address is a wildcard.
+export const HOST = process.env.HOST || "127.0.0.1";
 
 export const UPLOADS_DIR = path.join(process.cwd(), "uploads");
 export const OUTPUT_DIR = path.join(process.cwd(), "output");

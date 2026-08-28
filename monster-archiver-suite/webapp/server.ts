@@ -142,7 +142,11 @@ async function startServer() {
   }
 
   app.listen(PORT, HOST, () => {
-    const url = `http://${HOST}:${PORT}`;
+    // 0.0.0.0 / :: are *bind* addresses (listen on all interfaces), not
+    // browsable URLs — opening http://0.0.0.0:PORT fails on Windows/Chrome
+    // with ERR_ADDRESS_INVALID. Always hand the browser a loopback address.
+    const browseHost = HOST === "0.0.0.0" || HOST === "::" ? "127.0.0.1" : HOST;
+    const url = `http://${browseHost}:${PORT}`;
     console.log(`\nMonster Archiver Suite running at ${url}\n`);
     if (!process.env.NO_BROWSER) {
       openBrowser(url);
