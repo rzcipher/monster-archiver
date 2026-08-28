@@ -1,0 +1,8 @@
+extracted/
+node_modules/
+__pycache__/
+*.pyc
+dist/
+uploads/
+output/
+.env

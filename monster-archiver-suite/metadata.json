@@ -1,0 +1,6 @@
+{
+  "name": "Monster Archiver Suite",
+  "description": "Full-stack application for audio archiving, metadata tagging, and lyrics transcription/translation.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
