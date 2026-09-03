@@ -1,0 +1,22 @@
+# Runtime artifacts of the extracted working copy
+site/monster-archiver-suite/webapp/node_modules/
+site/monster-archiver-suite/webapp/dist/
+
+# Uploads/output are the app's working directories (created on demand by the
+# server); keep their contents out of git while preserving the folders.
+site/monster-archiver-suite/webapp/uploads/
+site/monster-archiver-suite/webapp/output/
+
+# User secrets & local env — config.json holds live API keys (HF/Gemini) and
+# is regenerated from monster_archiver.config.DEFAULT_CONFIG on first run.
+site/monster-archiver-suite/config.json
+site/monster-archiver-suite/config.json.tmp
+site/monster-archiver-suite/webapp/.env
+site/monster-archiver-suite/.env
+
+# Python caches and the app's database/log directory
+__pycache__/
+*.pyc
+site/monster-archiver-suite/.logs/
+*.sqlite
+*.sqlite3
