@@ -1,0 +1,289 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Space Grotesk", "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+
+  /* Neutral dark scale — shared across every color theme (not overridden
+     per data-theme below), so only the deezer/flow accents actually shift
+     when the user picks a theme. */
+  --color-void-950: #05070c;
+  --color-void-900: #0b0e16;
+  --color-void-800: #12161f;
+  --color-void-700: #1e2532;
+  --color-void-600: #2c3444;
+
+  /* Accent scale — these are the "nebula" (default) values. ThemePicker's
+     setTheme() flips [data-theme] on <html>; the override blocks further
+     down redefine these same custom properties, and since every Tailwind
+     color utility resolves through var(--color-deezer-500) etc at paint
+     time (Tailwind v4's default @theme behavior), the whole app repaints
+     live with no per-component theme-awareness needed. */
+  --color-deezer-200: #d9b8fa;
+  --color-deezer-300: #c496ff;
+  --color-deezer-400: #a855f7;
+  --color-deezer-500: #8b2ce8;
+  --color-deezer-600: #7916c9;
+  --color-deezer-800: #4c1d7a;
+  --color-deezer-950: #24093f;
+  --color-flow-400: #e84fc0;
+  --color-flow-500: #d926a9;
+
+  --animate-glow-pulse: glow-pulse 2.6s ease-in-out infinite;
+  --animate-breathe: breathe 8s ease-in-out infinite;
+  --animate-float-y: float-y 2.2s ease-in-out infinite;
+  --animate-scanline: scanline 3s linear infinite;
+}
+
+:root {
+  --glow-rgb: 139, 44, 232;
+}
+
+/* AmbientBackground's canvas/blobs are `fixed inset-0`, which only covers
+   the viewport — on a page taller than one screen (e.g. a long Library or
+   Settings list), scrolling past that reveals default white unless html/body
+   themselves carry the same dark base tone. */
+html {
+  background-color: var(--color-void-950);
+}
+
+/* ── Color themes ──────────────────────────────────────────────────────────
+   "nebula" is the default baked into @theme above, so it has no override
+   block — ThemePicker applies it by *removing* data-theme rather than
+   setting it to a value (see theme.ts). */
+:root[data-theme="ocean"] {
+  --color-deezer-200: #bfdbfe;
+  --color-deezer-300: #93c5fd;
+  --color-deezer-400: #60a5fa;
+  --color-deezer-500: #3b82f6;
+  --color-deezer-600: #2563eb;
+  --color-deezer-800: #1e40af;
+  --color-deezer-950: #172554;
+  --color-flow-400: #22d3ee;
+  --color-flow-500: #06b6d4;
+  --glow-rgb: 59, 130, 246;
+}
+
+:root[data-theme="ember"] {
+  --color-deezer-200: #fed7aa;
+  --color-deezer-300: #fdba74;
+  --color-deezer-400: #fb923c;
+  --color-deezer-500: #f97316;
+  --color-deezer-600: #ea580c;
+  --color-deezer-800: #9a3412;
+  --color-deezer-950: #431407;
+  --color-flow-400: #f87171;
+  --color-flow-500: #ef4444;
+  --glow-rgb: 249, 115, 22;
+}
+
+:root[data-theme="forest"] {
+  --color-deezer-200: #bbf7d0;
+  --color-deezer-300: #86efac;
+  --color-deezer-400: #4ade80;
+  --color-deezer-500: #22c55e;
+  --color-deezer-600: #16a34a;
+  --color-deezer-800: #166534;
+  --color-deezer-950: #052e16;
+  --color-flow-400: #2dd4bf;
+  --color-flow-500: #14b8a6;
+  --glow-rgb: 34, 197, 94;
+}
+
+:root[data-theme="mono"] {
+  --color-deezer-200: #d4d4d8;
+  --color-deezer-300: #a1a1aa;
+  --color-deezer-400: #8b8b95;
+  --color-deezer-500: #71717a;
+  --color-deezer-600: #52525b;
+  --color-deezer-800: #27272a;
+  --color-deezer-950: #131316;
+  --color-flow-400: #94a3b8;
+  --color-flow-500: #64748b;
+  --glow-rgb: 113, 113, 122;
+}
+
+@keyframes glow-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(var(--glow-rgb), 0.35); }
+  50% { box-shadow: 0 0 22px 4px rgba(var(--glow-rgb), 0.45); }
+}
+
+@keyframes breathe {
+  0%, 100% { transform: scale(1); opacity: 0.85; }
+  50% { transform: scale(1.08); opacity: 1; }
+}
+
+@keyframes float-y {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-3px); }
+}
+
+@keyframes scanline {
+  0% { transform: translateY(-120%); }
+  100% { transform: translateY(220%); }
+}
+
+@keyframes toast-in {
+  from { transform: translateY(8px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes caret-blink-kf {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+@keyframes stitch-crawl {
+  0% { background-position: 0% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes stitch-pulse {
+  0%, 100% { opacity: 0.25; }
+  50% { opacity: 0.6; }
+}
+
+@layer utilities {
+  .animate-spin-slow {
+    animation: spin 8s linear infinite;
+  }
+  .text-gradient-flow {
+    background-image: linear-gradient(90deg, var(--color-deezer-400), var(--color-flow-400));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .bg-gradient-deezer {
+    background-image: linear-gradient(90deg, var(--color-deezer-600), var(--color-flow-500));
+  }
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: rgba(15, 23, 42, 0.2);
+  }
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: rgba(51, 65, 85, 0.5);
+    border-radius: 9999px;
+  }
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: rgba(51, 65, 85, 0.8);
+  }
+
+  /* Blinking terminal caret (BootSequence's boot-line prompt). */
+  .caret-blink {
+    animation: caret-blink-kf 1s step-start infinite;
+  }
+
+  /* Dashed "thread" line, meant for panel/header edges — a slow marching
+     crawl along a repeating dash pattern rather than a static rule. */
+  .seam-line {
+    height: 1px;
+    background-image: repeating-linear-gradient(
+      90deg,
+      rgba(var(--glow-rgb), 0.45) 0 6px,
+      transparent 6px 12px
+    );
+    background-size: 200% 100%;
+    animation: stitch-crawl 14s linear infinite;
+    opacity: 0.5;
+  }
+
+  /* Dashed halo just inside a panel's own border, pulsing gently — reads as
+     a stitched costume patch. Needs `relative` on the element it's applied
+     to; `border-radius: inherit` keeps the dashed ring matched to it. */
+  .stitched-frame::after {
+    content: "";
+    position: absolute;
+    inset: 5px;
+    border-radius: inherit;
+    border: 1.5px dashed rgba(var(--glow-rgb), 0.35);
+    pointer-events: none;
+    animation: stitch-pulse 3.4s ease-in-out infinite;
+  }
+
+  /* Faint static noise texture, always-on (a texture, not motion) — sits
+     above AmbientBackground but below all interactive UI, never intercepts
+     pointer events. */
+  .grain-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: -5;
+    pointer-events: none;
+    opacity: 0.035;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  }
+
+  /* Now-playing seek/volume sliders (AudioPlayer) — a slim themed track
+     with a small circular thumb, styled per-engine since range inputs have
+     no unprefixed standard. */
+  .player-range {
+    -webkit-appearance: none;
+    appearance: none;
+    height: 4px;
+    border-radius: 9999px;
+    outline: none;
+    cursor: pointer;
+  }
+  .player-range::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 12px;
+    height: 12px;
+    border-radius: 9999px;
+    background: white;
+    box-shadow: 0 0 0 2px rgba(var(--glow-rgb), 0.6);
+    cursor: pointer;
+  }
+  .player-range::-moz-range-thumb {
+    width: 12px;
+    height: 12px;
+    border: none;
+    border-radius: 9999px;
+    background: white;
+    box-shadow: 0 0 0 2px rgba(var(--glow-rgb), 0.6);
+    cursor: pointer;
+  }
+  .player-range::-moz-range-track {
+    height: 4px;
+    border-radius: 9999px;
+    background: transparent;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-glow-pulse,
+  .animate-breathe,
+  .animate-float-y,
+  .animate-scanline,
+  .caret-blink,
+  .seam-line {
+    animation: none !important;
+  }
+  .stitched-frame::after {
+    animation: none !important;
+    opacity: 0.35;
+  }
+}
+
+.tech-grid {
+  background-size: 40px 40px;
+  background-image: 
+    linear-gradient(to right, rgba(var(--glow-rgb), 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(var(--glow-rgb), 0.05) 1px, transparent 1px);
+}
+
+.ambient-dot-grid {
+  position: fixed;
+  inset: 0;
+  z-index: -6;
+  background-size: 24px 24px;
+  background-image: radial-gradient(circle, rgba(var(--glow-rgb), 0.2) 1px, transparent 1px);
+  mask-image: radial-gradient(ellipse at center, black 20%, transparent 80%);
+  -webkit-mask-image: radial-gradient(ellipse at center, black 20%, transparent 80%);
+  pointer-events: none;
+}

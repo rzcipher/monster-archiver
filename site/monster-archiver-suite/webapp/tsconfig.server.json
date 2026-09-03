@@ -1,0 +1,13 @@
+{
+  // Type-check config for the Express server half of the app.
+  // tsconfig.json only includes src/** (the browser bundle), so server.ts,
+  // routes/ and lib/ were never type-checked at all — regressions there only
+  // surfaced as runtime crashes. Run with: npm run typecheck:server
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "noEmit": true,
+    "types": ["node"],
+    "moduleDetection": "force"
+  },
+  "include": ["server.ts", "routes/**/*", "lib/**/*"]
+}

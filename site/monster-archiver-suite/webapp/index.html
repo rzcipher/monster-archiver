@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Monster Archiver Suite</title>
+    <!-- Use the app's own mascot as the tab icon instead of letting the
+         browser 404 /favicon.ico. -->
+    <link rel="icon" type="image/png" href="/mascot.png" />
+    <meta name="theme-color" content="#05070c" />
+    <!-- index.css pulls the Google font stack via @import; preconnecting
+         starts the TLS handshakes while the (large, Tailwind) stylesheet is
+         still being parsed, so text renders with real fonts a beat sooner. -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <script>
+      // Anti-flash: apply a persisted theme choice before React (and thus
+      // ThemePicker/theme.ts) ever loads, so a reload doesn't briefly flash
+      // the default "nebula" palette. Duplicates theme.ts's storage key and
+      // valid-id list by hand since this must run with zero imports — keep
+      // both in sync if themes are ever added/renamed.
+      (function () {
+        try {
+          var key = "monster-archiver-theme";
+          var valid = ["ocean", "ember", "forest", "mono"];
+          var stored = window.localStorage.getItem(key);
+          if (stored && valid.indexOf(stored) !== -1) {
+            document.documentElement.setAttribute("data-theme", stored);
+          }
+        } catch (e) {}
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
+
